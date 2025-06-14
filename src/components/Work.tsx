@@ -23,7 +23,7 @@ const Work = ({ work, index }: WorkProps) => {
       <div className="relative overflow-hidden rounded-2xl bg-white/80 shadow-xl transition-all duration-500 ease-out hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
         <div className="absolute inset-0 bg-gradient-to-b to-white/10" />
         <img
-          src={work.imageUrl}
+          src={`/nash-portfolio-2025/${work.imageUrl}`}
           alt={work.title}
           className="w-full h-[225px] sm:h-[275px] md:h-[300px] lg:h-[350px] object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
         />
