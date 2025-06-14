@@ -11,7 +11,7 @@ export default function PostList() {
   const filtered = selected === "All" ? posts : posts.filter(p => p.type === selected);
 
   return (
-    <div className="py-6 px-8 bg-gray-100 rounded-2xl space-y-6">
+    <div className="py-6 px-8 rounded-2xl border border-gray-300/50 bg-gray-200/50 backdrop-blur-md shadow-2xl shadow-white/10 space-y-6">
       <h2 className="text-2xl font-bold">Recent Highlights✨</h2>
 
       <div className="flex gap-4 mb-4">
