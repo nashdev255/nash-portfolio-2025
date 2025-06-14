@@ -22,7 +22,7 @@
       "id": 3,
       "title": "イトキヨクエスト制作委員会 公式サイト",
       "description": "新感覚RPG「イトキヨクエスト」の公式ページです。",
-      "imageUrl": "/itky-quest-2.png",
+      "imageUrl": "/itky-quest.png",
       "tags": ["React", "Next.js", "TypeScript", "TailwindCSS", "GItHub REST API"],
       "link": "https://github.com/nashdev255/itky-gui",
       "isVisible": true
