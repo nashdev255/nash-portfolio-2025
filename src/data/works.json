@@ -1,0 +1,49 @@
+{
+  "works": [
+    {
+      "id": 1,
+      "title": "ClearTalk RPG",
+      "description": "",
+      "imageUrl": "/ctrpg.png",
+      "tags": ["Android", "Kotlin", "Jetpack Compose", "Lottie", "Room"],
+      "link": "https://github.com/nashdev255/clear-talk-RPG",
+      "isVisible": true
+    },
+    {
+      "id": 2,
+      "title": "Study Sync Hub",
+      "description": "Application which can provide an environment for learning, managing your study, and communicating with others.",
+      "imageUrl": "/study-sync-hub.png",
+      "tags": ["React", "Next.js", "TypeScript", "TailwindCSS", "supabase"],
+      "link": "https://github.com/nashdev255/study-sync-hub",
+      "isVisible": true
+    },
+    {
+      "id": 3,
+      "title": "イトキヨクエスト制作委員会 公式サイト",
+      "description": "新感覚RPG「イトキヨクエスト」の公式ページです。",
+      "imageUrl": "/itky-quest-2.png",
+      "tags": ["React", "Next.js", "TypeScript", "TailwindCSS", "GItHub REST API"],
+      "link": "https://github.com/nashdev255/itky-gui",
+      "isVisible": true
+    },
+    {
+      "id": 4,
+      "title": "Honey OS",
+      "description": "Full scratch Operating System made with reference to \"30日でできる！OS自作入門.\"",
+      "imageUrl": "/honey-os.png",
+      "tags": ["OS", "C", "Assembly"],
+      "link": "https://github.com/nashdev255/honey-os",
+      "isVisible": true
+    },
+    {
+      "id": 5,
+      "title": "Honey RPG",
+      "description": "For learning C++'s object-oriented (OOPL).",
+      "imageUrl": "/honey-rpg.png",
+      "tags": ["CLI", "C++"],
+      "link": "https://github.com/nashdev255/honey-rpg",
+      "isVisible": true
+    }
+  ]
+}

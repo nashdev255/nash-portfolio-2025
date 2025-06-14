@@ -9,12 +9,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.3.1",
-    "@astrojs/react": "^4.2.7",
+    "@astrojs/markdown-remark": "^6.3.2",
+    "@astrojs/react": "^4.3.0",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/vite": "^4.1.7",
     "@types/react-dom": "^19.1.5",
-    "astro": "^5.7.13",
+    "astro": "^5.9.2",
     "framer-motion": "^12.12.1",
     "gray-matter": "^4.0.3",
     "lucide-static": "^0.511.0",
