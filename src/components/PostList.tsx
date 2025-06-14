@@ -40,7 +40,7 @@ export default function PostList() {
             <p className="text-sm text-gray-500">{post.date}</p>
             <h3 className="text-lg font-semibold">{post.title}</h3>
             <p>{post.content}</p>
-            {post.link && <a href={post.link}></a>}
+            {post.link && <a href={post.link} className="hover:underline text-sky-600">詳細を確認する</a>}
           </motion.div>
         ))}
       </div>
