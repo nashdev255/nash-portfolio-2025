@@ -1,8 +1,37 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from "framer-motion";
 import Work from "./Work";
 import worksData from "../data/works.json";
 
 const Works = () => {
+  // const [items, setItems] = useState<number[]>([]);
+  // const [page, setPage] = useState(1);
+  // const loaderRef = useRef<HTMLDivElement | null>(null);
+  
+  // useEffect(() => {
+  //   const loadItems = async () => {
+  //     const newItems = Array.from({ length: 10 }, (_, i) => (page-1) * 10 + i + 1 );
+  //     setItems((prev) => [...prev, ...newItems]);
+  //   };
+  //   loadItems();
+  // }, [page]);
+
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(([entry]) => {
+  //     if ( entry.isIntersecting ) {
+  //       setPage((prev) => prev + 1);
+  //     }
+  //   });
+
+  //   if ( loaderRef.current ) {
+  //     observer.observe(loaderRef.current);
+  //   }
+
+  //   return () => {
+  //     if ( loaderRef.current ) observer.unobserve(loaderRef.current);
+  //   };
+  // }, []);
+
   return (
     <section className="py-10 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,6 +58,7 @@ const Works = () => {
           )
           ))}
         </div>
+        {/* <div ref={loaderRef}></div> */}
       </div>
     </section>
   );

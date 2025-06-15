@@ -1,5 +1,5 @@
 // src/components/PostList.tsx (React)
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import posts from "../data/posts.json";
 
@@ -7,6 +7,33 @@ const categories = ["All", "Achieve", "Tweet"];
 
 export default function PostList() {
   const [selected, setSelected] = useState("All");
+  // const [items, setItems] = useState<number[]>([]);
+  //   const [page, setPage] = useState(1);
+  //   const loaderRef = useRef<HTMLDivElement | null>(null);
+    
+  //   useEffect(() => {
+  //     const loadItems = async () => {
+  //       const newItems = Array.from({ length: 10 }, (_, i) => (page-1) * 10 + i + 1 );
+  //       setItems((prev) => [...prev, ...newItems]);
+  //     };
+  //     loadItems();
+  //   }, [page]);
+  
+  //   useEffect(() => {
+  //     const observer = new IntersectionObserver(([entry]) => {
+  //       if ( entry.isIntersecting ) {
+  //         setPage((prev) => prev + 1);
+  //       }
+  //     });
+  
+  //     if ( loaderRef.current ) {
+  //       observer.observe(loaderRef.current);
+  //     }
+  
+  //     return () => {
+  //       if ( loaderRef.current ) observer.unobserve(loaderRef.current);
+  //     };
+  //   }, []);
 
   const filtered = selected === "All" ? posts : posts.filter(p => p.type === selected);
 
@@ -19,7 +46,7 @@ export default function PostList() {
           <button
             key={cat}
             onClick={() => setSelected(cat)}
-            className={`px-4 py-2 rounded-full ${
+            className={`px-4 py-2 rounded-full border border-gray-200 hover:bg-gray-300 duration-75 ${
               selected === cat ? "bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-300 font-bold" : "bg-white"
             }`}
           >
@@ -44,6 +71,7 @@ export default function PostList() {
           </motion.div>
         ))}
       </div>
+      {/* <div ref={loaderRef}></div> */}
     </div>
   );
 }
