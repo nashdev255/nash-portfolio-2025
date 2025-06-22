@@ -17,10 +17,13 @@
     "astro": "^5.9.3",
     "framer-motion": "^12.12.1",
     "gray-matter": "^4.0.3",
+    "katex": "^0.16.22",
     "lucide-static": "^0.511.0",
     "marked": "^15.0.11",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.1.4",
