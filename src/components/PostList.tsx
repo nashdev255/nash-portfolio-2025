@@ -47,7 +47,7 @@ export default function PostList() {
             key={cat}
             onClick={() => setSelected(cat)}
             className={`px-4 py-2 rounded-full border border-gray-200 hover:bg-gray-300 duration-75 ${
-              selected === cat ? "bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-300 font-bold" : "bg-white"
+              selected === cat ? "text-white bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-300 font-bold" : "bg-white"
             }`}
           >
             {cat}
