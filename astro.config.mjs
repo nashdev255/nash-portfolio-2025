@@ -4,9 +4,10 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://astronaut.github.io',
+  site: 'http://nashdev255.github.io/',
   base: 'nash-portfolio-2025',
   vite: {
     plugins: [tailwindcss()],
@@ -16,6 +17,11 @@ export default defineConfig({
   
   markdown: {
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [
+      [
+        rehypeKatex,
+        {output: 'mathml' }
+      ]
+    ],
   },
 });
