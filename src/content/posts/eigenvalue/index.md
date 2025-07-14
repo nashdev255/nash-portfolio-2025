@@ -64,7 +64,7 @@ $A\vec{x}={
 \end{pmatrix}}$である。
 以下に$\vec{x}$と$A\vec{x}$のベクトルを示す。
 
-![Untitled](eigenvalue/Untitled.png)
+![Untitled](Untitled.png)
 
 グラフにおいて、$\overrightarrow{AB}=\vec{x}={
 \begin{pmatrix}
@@ -105,7 +105,7 @@ $A\vec{x}={
 
 以下に$\vec{x}$と$A\vec{x}$のベクトルを示す。
 
-![Untitled](eigenvalue/Untitled_1.png)
+![Untitled](Untitled_1.png)
 
 グラフにおいて、$\overrightarrow{AB}=\vec{x}={
 \begin{pmatrix}

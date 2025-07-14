@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.3.2",
+    "@astrojs/mdx": "^4.3.0",
     "@astrojs/react": "^4.3.0",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/vite": "^4.1.7",
