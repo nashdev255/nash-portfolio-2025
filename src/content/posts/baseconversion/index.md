@@ -7,6 +7,8 @@ tags: ["アルゴリズム", "数学"]
 
 $m$桁の$A$進数$\alpha$は、
 
+<br />
+
 $$
 \alpha = \sum_{k=0}^{m-1} a_k A^k, \quad a_k = \left\lfloor \frac{\alpha}{A^k} \right\rfloor \bmod Aより
 $$
@@ -16,6 +18,8 @@ $$
 $$
 \alpha = \sum_{k=0}^{m-1} \left( \left\lfloor \frac{\alpha}{A^k} \right\rfloor \bmod A \right) \cdot A^k
 $$
+
+<br />
 
 と表される。
 
