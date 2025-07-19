@@ -12,6 +12,7 @@
     "@astrojs/markdown-remark": "^6.3.2",
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/react": "^4.3.0",
+    "@fontsource/noto-sans-jp": "^5.2.6",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/vite": "^4.1.7",
     "@types/react-dom": "^19.1.5",

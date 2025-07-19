@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { createCanvas } from 'canvas';
+import { createCanvas, loadImage } from 'canvas';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -31,7 +31,6 @@ export const GET: APIRoute = async ({ params, props }) => {
     gradient.addColorStop(0, '#4facfe');
     gradient.addColorStop(1, '#00f2fe');
 
-    
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
@@ -45,7 +44,7 @@ export const GET: APIRoute = async ({ params, props }) => {
     ctx.fill();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 48px Arial, sans-serif';
+    ctx.font = 'bold 48px sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     
@@ -53,10 +52,20 @@ export const GET: APIRoute = async ({ params, props }) => {
       ? post.data.title.substring(0, 35) + '...' 
       : post.data.title;
     
-    ctx.fillText(title, 80, 80);
+    let currentX = 80;
+    const titleY = 80;
+    const charSpacing = 2;
+    
+    for (let i = 0; i < title.length; i++) {
+      const char = title[i];
+      ctx.fillText(char, currentX, titleY);
+      
+      const charWidth = ctx.measureText(char).width;
+      currentX += charWidth + charSpacing;
+    }
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.font = '24px Arial, sans-serif';
+    ctx.font = '24px sans-serif';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     ctx.fillText('Nash | Digital Content Developer', width - 80, height - 80);
@@ -71,7 +80,10 @@ export const GET: APIRoute = async ({ params, props }) => {
       },
     });
   } catch (error) {
-    console.error('Error generating OGP image:', error);
+    const err = error as Error;
+    console.error('Error generating OGP image:', err);
+    console.error('Error details:', err.message);
+    console.error('Error stack:', err.stack);
     return new Response('Error generating image', { status: 500 });
   }
 };
