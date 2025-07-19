@@ -10,12 +10,14 @@ export async function getStaticPaths() {
   }));
 }
 
+export const prerender = true;
+
 export const GET: APIRoute = async ({ params, props }) => {
   try {
     const { slug } = params;
     const { post } = props;
-    
-    if (!slug || !post) {
+
+    if (!post) {
       return new Response('Post not found', { status: 404 });
     }
 
@@ -29,20 +31,21 @@ export const GET: APIRoute = async ({ params, props }) => {
     gradient.addColorStop(0, '#4facfe');
     gradient.addColorStop(1, '#00f2fe');
 
+    
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
     ctx.beginPath();
-    ctx.arc(200, 200, 120, 0, 2 * Math.PI);
+    ctx.arc(200, 200, 150, 0, 2 * Math.PI);
     ctx.fill();
 
     ctx.beginPath();
-    ctx.arc(width - 200, height - 200, 140, 0, 2 * Math.PI);
+    ctx.arc(1000, 430, 120, 0, 2 * Math.PI);
     ctx.fill();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 48px "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif';
+    ctx.font = 'bold 48px Arial, sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     
@@ -53,7 +56,7 @@ export const GET: APIRoute = async ({ params, props }) => {
     ctx.fillText(title, 80, 80);
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.font = '24px "Hiragino Sans", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif';
+    ctx.font = '24px Arial, sans-serif';
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     ctx.fillText('Nash | Digital Content Developer', width - 80, height - 80);
@@ -64,11 +67,11 @@ export const GET: APIRoute = async ({ params, props }) => {
       status: 200,
       headers: {
         'Content-Type': 'image/png',
-        'Cache-Control': 'public, max-age=31536000, immutable',
+        'Cache-Control': 'public, max-age=31536000',
       },
     });
   } catch (error) {
     console.error('Error generating OGP image:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new Response('Error generating image', { status: 500 });
   }
 };
