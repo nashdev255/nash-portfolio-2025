@@ -1,31 +1,8 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { createCanvas, registerFont } from 'canvas';
-import path from 'path';
+import sharp from 'sharp';
 import fs from 'fs';
-
-let fontRegistered = false;
-try {
-  const fontPaths = [
-    path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-japanese-400-normal.woff2'),
-    path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-japanese-700-normal.woff2'),
-    path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-latin-400-normal.woff2'),
-  ];
-  
-  for (const fontPath of fontPaths) {
-    if (fs.existsSync(fontPath)) {
-      registerFont(fontPath, { family: 'Noto Sans JP' });
-      fontRegistered = true;
-      break;
-    }
-  }
-  
-  if (!fontRegistered) {
-    console.log('No font files found');
-  }
-} catch (error) {
-  console.log('Font registration failed:', error);
-}
+import path from 'path';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -49,57 +26,61 @@ export const GET: APIRoute = async ({ params, props }) => {
     const width = 1200;
     const height = 630;
 
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext('2d');
-
-    const gradient = ctx.createLinearGradient(0, 0, width, height);
-    gradient.addColorStop(0, '#4facfe');
-    gradient.addColorStop(1, '#00f2fe');
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-    ctx.beginPath();
-    ctx.arc(200, 200, 150, 0, 2 * Math.PI);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(1000, 430, 120, 0, 2 * Math.PI);
-    ctx.fill();
-
-    // フォントが登録されているかチェックして使用
-    const fontFamily = fontRegistered ? '"Noto Sans JP", sans-serif' : 'sans-serif';
-    
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `bold 48px ${fontFamily}`;
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    
-    const title = post.data.title.length > 35 
-      ? post.data.title.substring(0, 35) + '...' 
-      : post.data.title;
-    
-    // 日本語文字を個別に描画して問題を回避
-    let currentX = 80;
-    const titleY = 80;
-    const charSpacing = 2;
-    
-    for (let i = 0; i < title.length; i++) {
-      const char = title[i];
-      ctx.fillText(char, currentX, titleY);
-      
-      const charWidth = ctx.measureText(char).width;
-      currentX += charWidth + charSpacing;
+    let fontBase64 = '';
+    try {
+      const fontPath = path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-japanese-400-normal.woff2');
+      if (fs.existsSync(fontPath)) {
+        const fontBuffer = fs.readFileSync(fontPath);
+        fontBase64 = fontBuffer.toString('base64');
+        console.log('Font loaded successfully');
+      }
+    } catch (error) {
+      console.log('Font loading failed');
     }
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.font = `24px ${fontFamily}`;
-    ctx.textAlign = 'right';
-    ctx.textBaseline = 'bottom';
-    ctx.fillText('Nash | Digital Content Developer', width - 80, height - 80);
+    const svg = `
+      <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:1" />
+          </linearGradient>
+          ${fontBase64 ? `
+          <style>
+            @font-face {
+              font-family: 'Noto Sans JP Embedded';
+              src: url(data:font/woff2;base64,${fontBase64}) format('woff2');
+              font-weight: 400;
+              font-style: normal;
+            }
+            @font-face {
+              font-family: 'Noto Sans JP Embedded';
+              src: url(data:font/woff2;base64,${fontBase64}) format('woff2');
+              font-weight: 700;
+              font-style: normal;
+            }
+          </style>
+          ` : ''}
+        </defs>
+        
+        <!-- 背景グラデーション -->
+        <rect width="100%" height="100%" fill="url(#grad)"/>
+        
+        <!-- 装飾的な円 -->
+        <circle cx="200" cy="200" r="150" fill="rgba(255,255,255,0.1)"/>
+        <circle cx="1000" cy="430" r="120" fill="rgba(255,255,255,0.1)"/>
+        
+        <!-- タイトル -->
+        <text x="80" y="120" font-family="${fontBase64 ? 'Noto Sans JP Embedded' : 'Arial, sans-serif'}" font-weight="bold" font-size="48" fill="white">${post.data.title.length > 35 ? post.data.title.substring(0, 35) + '...' : post.data.title}</text>
+        
+        <!-- ブランド名 -->
+        <text x="1120" y="580" font-family="${fontBase64 ? 'Noto Sans JP Embedded' : 'Arial, sans-serif'}" font-size="24" fill="rgba(255,255,255,0.9)" text-anchor="end">Nash | Digital Content Developer</text>
+      </svg>
+    `;
 
-    const buffer = canvas.toBuffer('image/png');
+    const buffer = await sharp(Buffer.from(svg))
+      .png()
+      .toBuffer();
 
     return new Response(buffer, {
       status: 200,
