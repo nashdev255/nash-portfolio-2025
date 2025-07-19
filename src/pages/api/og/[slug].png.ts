@@ -1,6 +1,31 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas, registerFont } from 'canvas';
+import path from 'path';
+import fs from 'fs';
+
+let fontRegistered = false;
+try {
+  const fontPaths = [
+    path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-japanese-400-normal.woff2'),
+    path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-japanese-700-normal.woff2'),
+    path.join(process.cwd(), 'node_modules', '@fontsource', 'noto-sans-jp', 'files', 'noto-sans-jp-latin-400-normal.woff2'),
+  ];
+  
+  for (const fontPath of fontPaths) {
+    if (fs.existsSync(fontPath)) {
+      registerFont(fontPath, { family: 'Noto Sans JP' });
+      fontRegistered = true;
+      break;
+    }
+  }
+  
+  if (!fontRegistered) {
+    console.log('No font files found');
+  }
+} catch (error) {
+  console.log('Font registration failed:', error);
+}
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -43,8 +68,11 @@ export const GET: APIRoute = async ({ params, props }) => {
     ctx.arc(1000, 430, 120, 0, 2 * Math.PI);
     ctx.fill();
 
+    // フォントが登録されているかチェックして使用
+    const fontFamily = fontRegistered ? '"Noto Sans JP", sans-serif' : 'sans-serif';
+    
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 48px sans-serif';
+    ctx.font = `bold 48px ${fontFamily}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     
@@ -52,6 +80,7 @@ export const GET: APIRoute = async ({ params, props }) => {
       ? post.data.title.substring(0, 35) + '...' 
       : post.data.title;
     
+    // 日本語文字を個別に描画して問題を回避
     let currentX = 80;
     const titleY = 80;
     const charSpacing = 2;
@@ -65,7 +94,7 @@ export const GET: APIRoute = async ({ params, props }) => {
     }
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.font = '24px sans-serif';
+    ctx.font = `24px ${fontFamily}`;
     ctx.textAlign = 'right';
     ctx.textBaseline = 'bottom';
     ctx.fillText('Nash | Digital Content Developer', width - 80, height - 80);
