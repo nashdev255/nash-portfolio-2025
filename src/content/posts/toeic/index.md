@@ -2,7 +2,7 @@
 title: "TOEIC結果置き場"
 pubDate: 2025-07-14
 description: ""
-tags: ["英語", "語学", "資格"]
+tags: ["英語", "語学", "資格", "まとめ"]
 ---
 
 ## 2025年6月22日 公開TOEIC
