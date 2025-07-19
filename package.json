@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.1.7",
     "@types/react-dom": "^19.1.5",
     "astro": "^5.9.3",
+    "canvas": "^3.1.2",
     "framer-motion": "^12.12.1",
     "gray-matter": "^4.0.3",
     "katex": "^0.16.22",
@@ -24,7 +25,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "sharp": "^0.34.3"
   },
   "devDependencies": {
     "@types/react": "^19.1.4",

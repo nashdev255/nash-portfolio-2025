@@ -1,127 +1,62 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import type { GetStaticPaths } from 'astro';
-import ArrowLeft from 'lucide-static/icons/arrow-left.svg';
+import { getCollection } from 'astro:content';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostDetail from '../../components/PostDetail.tsx';
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function getStaticPaths() {
   const posts = await getCollection('posts');
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
   }));
-};
+}
 
-const { post } = Astro.props as { post: CollectionEntry<'posts'> };
+const { post } = Astro.props;
 const { Content } = await post.render();
+
+const ogImageUrl = `${Astro.site}api/og/${post.slug}.png`;
 ---
 
-<BaseLayout>
-  <article class="prose prose-lg max-w-none pt-8">
-    <!--- Heading --->
-    <div class="mb-8 pb-6 border-b border-gray-200">
-      <h1 class="text-3xl font-bold text-gray-900 mb-4">{post.data.title}</h1>
-      <div class="flex items-center text-gray-600 space-x-4">
-        <time datetime={post.data.pubDate.toISOString()}>
-          {post.data.pubDate.toLocaleDateString('ja-JP')}
-        </time>
-        {post.data.tags && (
-          <div class="flex space-x-2">
-            {post.data.tags.map((tag: string) => (
-              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-      {post.data.description && (
-        <p class="text-lg text-gray-600 mt-4">{post.data.description}</p>
-      )}
-    </div>
+<html lang="ja">
+  <head prefix="og: https://ogp.me/ns#">
+    <title>{post.data.title} | Nash</title>
+    <meta charset="utf8" />
     
-    <!--- Article Content --->
-    <div class="markdown-content math-block py-4">
-      <Content />
-    </div>
+    <meta property="og:url" content={`${Astro.site}posts/${post.slug}`}>
+    <meta property="og:type" content="article">
+    <meta property="og:title" content={post.data.title}>
+    <meta property="og:site_name" content="Nash | Digital Content Developer">
+    <meta property="og:image" content={ogImageUrl}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    {post.data.description && (
+      <meta property="og:description" content={post.data.description}>
+    )}
 
-    <!--- Bottom --->
-    <div class="border-t border-gray-200">
-      <a href="/nash-portfolio-2025/posts/">
-        <div class="inline-flex items-center gap-1 py-4 text-gray-500">
-          <ArrowLeft class="w-5 h-5 align-middle" />
-          <p class="text-md">記事一覧に戻る</p>
-        </div>
-      </a>
-    </div>
-  </article>
-</BaseLayout>
-<style>
-  .markdown-content {
-    @apply text-gray-900 leading-relaxed;
-  }
-  
-  .markdown-content h1,
-  .markdown-content h2,
-  .markdown-content h3,
-  .markdown-content h4,
-  .markdown-content h5,
-  .markdown-content h6 {
-    @apply font-bold text-gray-900 mt-8 mb-4;
-  }
-  
-  .markdown-content h1 { @apply text-3xl; }
-  .markdown-content h2 { @apply text-2xl; }
-  .markdown-content h3 { @apply text-xl; }
-  .markdown-content h4 { @apply text-lg; }
-  
-  .markdown-content p {
-    @apply mb-4;
-  }
-  
-  .markdown-content ul,
-  .markdown-content ol {
-    @apply mb-4 pl-6;
-  }
-  
-  .markdown-content li {
-    @apply mb-2;
-  }
-  
-  .markdown-content blockquote {
-    @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 mb-4;
-  }
-  
-  .markdown-content code {
-    @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
-  }
-  
-  .markdown-content pre {
-    @apply bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
-  }
-  
-  .markdown-content pre code {
-    @apply bg-transparent p-0;
-  }
-  
-  .markdown-content a {
-    @apply text-blue-600 hover:text-blue-800 underline;
-  }
-  
-  .markdown-content img {
-    @apply max-w-full h-auto rounded-lg shadow-md my-4;
-  }
-  
-  .markdown-content table {
-    @apply w-full border-collapse border border-gray-300 mb-4;
-  }
-  
-  .markdown-content th,
-  .markdown-content td {
-    @apply border border-gray-300 px-4 py-2 text-left;
-  }
-  
-  .markdown-content th {
-    @apply bg-gray-100 font-semibold;
-  }
-</style> 
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content={ogImageUrl}>
+    <meta name="twitter:site" content="@nashdev255">
+    <meta name="twitter:title" content={post.data.title}>
+    {post.data.description && (
+      <meta name="twitter:description" content={post.data.description}>
+    )}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="icon" href="https://nashdev255.github.io/nash-portfolio-2025/dango.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-6LkG2wmY8FK9E0vU9OOr8UvLw5N+3v9/qTLZH1+a9qeqL5g4wSdRhdS+3HAFZpkF1" crossorigin="anonymous">
+  </head>
+  <body class="bg-white text-gray-900 font-sans max-w-2xl mx-auto">
+    <Header />
+    <main class="pt-22 pb-4 mx-6">
+      <PostDetail post={post} client:load />
+      <article class="prose prose-lg max-w-none">
+        <Content />
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
