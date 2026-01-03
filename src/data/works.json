@@ -12,7 +12,7 @@
     {
       "id": 2,
       "title": "unipla!",
-      "description": "2025年鈴鹿高専祭 4I学科展示で大好評だったチームuniteaによる創造工学の作品です。",
+      "description": "2025年鈴鹿高専祭 4I学科展示で大好評だったチームuniteaによる創造工学の作品です。楽しみながら社会問題に触れることを目的とした幼児向けゲームです。",
       "imageUrl": "/unipla.png",
       "tags": ["Unity"],
       "link": "http://unityroom.com/games/unipla",
@@ -21,7 +21,7 @@
     {
       "id": 3,
       "title": "ClearTalk RPG",
-      "description": "",
+      "description": "2024年 パソコン甲子園 モバイル部門で開発した作品です。発声やコミュニケーションのハードルを乗り越えることを目的としたゲームです。",
       "imageUrl": "/ctrpg.png",
       "tags": ["Android", "Kotlin", "Jetpack Compose", "Lottie", "Room"],
       "link": "https://github.com/nashdev255/clear-talk-RPG",
